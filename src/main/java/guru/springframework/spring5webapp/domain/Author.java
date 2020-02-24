@@ -1,21 +1,31 @@
 package guru.springframework.spring5webapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Created by jt on 12/22/19.
+ */
 @Entity
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String firstName;
     private String lastName;
 
     @ManyToMany(mappedBy = "authors")
-    private Set<Book> books;
+    private Set<Book> books = new HashSet<>();
 
     public Author() {
+    }
+
+    public Author(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -24,12 +34,6 @@ public class Author {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Author(String firstName, String lastName, Set<Book> books) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.books = books;
     }
 
     public String getFirstName() {
@@ -80,6 +84,4 @@ public class Author {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
-
-
 }
